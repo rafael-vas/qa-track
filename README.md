@@ -10,6 +10,8 @@ A **Plataforma de Rastreamento de Qualidade** é um sistema focado no ciclo de v
 
 O objetivo é resolver um problema real enfrentado por equipes de desenvolvimento: o controle eficiente de demandas com regras claras de responsabilidade (*ownership*), fluxo de status e auditoria.
 
+O projeto foi organizado em classes separadas para modelagem, regras de negócio e execução, usando herança, encapsulamento e polimorfismo no domínio de tickets.
+
 ---
 
 ## ❗ Problema que o sistema resolve
@@ -98,12 +100,25 @@ Responsável por:
 
 ---
 
+## 🗂️ Estrutura do Projeto
+
+* `src/sistema/model` → entidades do sistema, como `Ticket`, `Bug`, `Feature`, `Melhoria` e os tipos de usuário
+* `src/sistema/service` → regras de negócio e operações do sistema
+* `src/sistema/app` → ponto de entrada da aplicação
+
+---
+
 ### 🗂️ Estruturas de Dados
 
 * Uso de **vetores de objetos (arrays)**:
 
   * `Ticket[]`
   * `String[]` (histórico)
+
+* Limites fixos na versão atual:
+
+  * até 100 tickets cadastrados
+  * até 100 eventos por histórico de ticket
 
 ---
 
@@ -163,6 +178,50 @@ Toda mudança:
 6. QA valida e resolve
 
 📌 Resultado: histórico completo garantindo rastreabilidade do incidente
+
+---
+
+## ▶️ Como Obter e Executar o Projeto
+
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/rafael-vas/qa-track.git
+```
+
+2. Entre na pasta do projeto:
+
+```bash
+cd qa-track
+```
+
+3. Abra o projeto no VS Code ou em outra IDE Java.
+
+4. Execute a classe principal `sistema.app.Main`.
+
+Ao iniciar, o sistema pede o cadastro inicial de um Gestor, um Desenvolvedor e um QA. Depois disso, o menu da versão atual libera as funcoes basicas da entrega inicial: criar bug, listar tickets, atribuir responsavel, alterar status e consultar historico.
+
+As classes `Feature` e `Melhoria` já existem na modelagem e no serviço, mas ainda nao estao expostas no menu de console.
+
+Também é possível executar pelo terminal, se o JDK estiver instalado, compilando apenas os arquivos usados pela aplicação principal:
+
+```bash
+mkdir out
+javac -d out src/sistema/model/*.java src/sistema/service/SistemaTickets.java src/sistema/app/Main.java
+java -cp out sistema.app.Main
+```
+
+Se a IDE pedir um ponto de entrada, use `sistema.app.Main` como classe principal.
+
+## ✅ O que esta implementado nesta versao
+
+* Criacao de bugs com prioridade, passos para reproduzir e ambiente
+* Listagem de tickets cadastrados
+* Atribuicao de responsavel pelo gestor
+* Transicao de status com validacao de perfil e fluxo
+* Consulta de historico do ticket
+* Registro de data de criacao, ultima atualizacao e eventos do historico
 
 ---
 
